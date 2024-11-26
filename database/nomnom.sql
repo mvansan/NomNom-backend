@@ -12,25 +12,25 @@ CREATE TABLE Users (
 
 -- Tạo bảng Restaurants
 CREATE TABLE Restaurants (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    address TEXT NOT NULL,
-    latitude DECIMAL(10, 6) NOT NULL,
-    longitude DECIMAL(10, 6) NOT NULL,
+    id INT PRIMARY KEY,
+    res_name VARCHAR(255) NOT NULL,
+    res_address TEXT NOT NULL,
+    latitude DECIMAL(10, 6) NULL,
+    longitude DECIMAL(10, 6) NULL,
     distance DECIMAL(10, 2)
 );
 
 -- Tạo bảng Category
 CREATE TABLE Category (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id INT PRIMARY KEY,
     category VARCHAR(255) NOT NULL
 );
 
 -- Tạo bảng Dishes
 CREATE TABLE Dishes (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    price DECIMAL(10, 2) NOT NULL,
+    dish_name VARCHAR(255) NOT NULL,
+    price INT NOT NULL,
     average_rating DECIMAL(3, 1) CHECK (average_rating BETWEEN 1.0 AND 5.0),
     calories INT NOT NULL,
     img_url VARCHAR(2083),

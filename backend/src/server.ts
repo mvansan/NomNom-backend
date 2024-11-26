@@ -1,7 +1,8 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import mysql from 'mysql2/promise';
+import dishRoutes from './routes/dishRoutes';
 
 dotenv.config();
 
@@ -19,8 +20,11 @@ const db = mysql.createPool({
   database: process.env.DB_NAME,
 });
 
+// Routes: Truyền `db` vào dishRoutes
+app.use('/dishes', dishRoutes(db));
+
 // API kiểm tra kết nối
-app.get('/', async (req: Request, res: Response) => {
+app.get('/', async (req, res) => {
   try {
     const [rows] = await db.query('SELECT 1 + 1 AS result');
     res.json({ message: 'Kết nối thành công!', result: rows });

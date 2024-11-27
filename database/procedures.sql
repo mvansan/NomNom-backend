@@ -1,4 +1,4 @@
-USE nomnom
+USE nomnom;
 
 DROP PROCEDURE IF EXISTS FilterDishes;
 

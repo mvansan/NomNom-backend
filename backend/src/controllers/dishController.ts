@@ -15,11 +15,11 @@ export const searchDishes = async (req: Request, res: Response): Promise<void> =
     }
 
     const query = `
-      SELECT Dishes.name, Dishes.price, Dishes.average_rating, 
+      SELECT Dishes.dish_name, Dishes.price, Dishes.average_rating, 
              Dishes.calories, Dishes.img_url, Category.category 
       FROM Dishes 
       INNER JOIN Category ON Dishes.category_id = Category.id
-      WHERE Dishes.name LIKE ?
+      WHERE Dishes.dish_name LIKE ?
     `;
     const [results] = await db.execute(query, [`%${q}%`]);
 

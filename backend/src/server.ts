@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import mysql from 'mysql2/promise';
+import dishRoutes from './routes/dishRoutes';
 
 dotenv.config();
 
@@ -35,6 +36,8 @@ app.get('/', async (req: Request, res: Response) => {
     res.status(500).json({ message: 'Lỗi kết nối MySQL', error });
   }
 });
+
+app.use('/api/dishes', dishRoutes);
 
 // Start server
 const PORT = process.env.PORT || 5000;

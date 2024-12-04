@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import db from '../config/db';
-import { Dish } from '../models/dish'; 
+import { Dish } from '../models/dish';
 
 export const searchDishes = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -53,3 +53,35 @@ export const searchDishes = async (req: Request, res: Response): Promise<void> =
     });
   }
 };
+
+export const getAllDishes = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const query = `
+      SELECT 
+        Dishes.id, 
+        Dishes.dish_name, 
+        Dishes.price, 
+        Dishes.average_rating, 
+        Dishes.calories, 
+        Dishes.img_url, 
+        Category.id AS category_id,
+        Restaurants.distance,
+        Restaurants.res_address,
+        Feedback.rating,
+        Feedback.comment 
+      FROM Dishes 
+      INNER JOIN Category ON Dishes.category_id = Category.id
+      INNER JOIN Restaurants ON Dishes.restaurant_id = Restaurants.id
+      LEFT JOIN Feedback ON Dishes.id = Feedback.dish_id
+    `;
+    const [result] = await db.query(query); 
+    res.status(200).json(result); 
+  } catch (error) {
+    console.error('Error getting all dishes:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Lỗi hệ thống khi lấy danh sách món ăn.',
+    });
+  }
+}
+

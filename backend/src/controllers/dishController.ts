@@ -77,6 +77,7 @@ export const getAllDishes = async (req: Request, res: Response): Promise<void> =
       INNER JOIN Category ON Dishes.category_id = Category.id
       INNER JOIN Restaurants ON Dishes.restaurant_id = Restaurants.id
       LEFT JOIN Feedback ON Dishes.id = Feedback.dish_id
+      ORDER BY Dishes.average_rating DESC, Restaurants.distance ASC
     `;
     const [result] = await db.query(query); 
     res.status(200).json(result); 

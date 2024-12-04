@@ -215,7 +215,7 @@ VALUES
 
 
 -- Sprint2
--- Seed data cho bảng User
+-- Nhập dữ liệu vào bảng User
 INSERT INTO Users (user_id, username, password, email)
 VALUES
     (1, 'john_doe', 'password123', 'john.doe@example.com'),
@@ -229,7 +229,7 @@ VALUES
     (9, 'diana_prince', 'wonderwoman321', 'diana.prince@example.com'),
     (10, 'tony_stark', 'ironman123', 'tony.stark@example.com');
 
--- Seed data cho bảng Cart
+-- Nhập dữ liệu vào bảng Cart
 INSERT INTO Cart (user_id)
 VALUES 
     (1),
@@ -244,7 +244,7 @@ VALUES
     (10);
 
 
--- Seed data cho bảng Cart_items
+-- Nhập dữ liệu vào bảng Cart_items
 INSERT INTO Cart_items (cart_id, dish_id)
 VALUES 
     (1, 1),
@@ -266,7 +266,7 @@ VALUES
     (10, 17),
     (10, 18);
 
--- Seed data cho bảng Order_items
+-- Nhập dữ liệu vào bảng Order_items
 INSERT INTO Order_items (cart_id, dish_id, price, quantity, total, status)
 VALUES 
     (1, 1, 175.00, 2, 350.00, 'confirmed'),
@@ -288,7 +288,7 @@ VALUES
     (10, 17, 165.00, 4, 660.00, 'confirmed'),
     (10, 18, 185.00, 1, 185.00, 'not_confirmed');
 
--- Seed data cho bảng Feedback
+-- Nhập dữ liệu vào bảng Feedback
 INSERT INTO Feedback (user_id, dish_id, rating, comment)
 VALUES 
     (1, 1, 4.5, 'Món ăn ngon, hương vị vừa miệng.'),

@@ -154,9 +154,9 @@ VALUES
     (53, 'Sushi cuộn cá hồi', 120, 4.6, 300, 'https://i.pinimg.com/736x/ac/dc/24/acdc2411073819f0216c2f74d3d22f39.jpg', 6, 16),
     (54, 'Bánh xèo miền Trung', 45, 4.4, 400, 'https://i.pinimg.com/736x/2f/ab/2b/2fab2b34f113ad9fb0bdfaa2714311a5.jpg', 4, 17),
     (55, 'Gà rán', 80, 4.3, 600, 'https://i.pinimg.com/736x/bb/c3/1a/bbc31a772affac6658a9cc3d3e711214.jpg', 5, 18),
-    (56, 'Bánh cuốn nóng', 30, 4.5, 350, 'https://i.pinimg.com/736x/a3/bb/c5/a3bbc555f74ccb8472facd31340740c9.jpg', 4, 19),
-    (57, 'Mì ý sốt kem hải sản', 60, 4.6, 550, 'https://i.pinimg.com/736x/84/e5/28/84e528911a5b9cc13415d87bec67ae17.jpg', 2 20),
-    (58, 'Bún đậu mắm tôm', 40, 4.2, 400, 'https://i.pinimg.com/736x/cb/93/71/cb9371ed1a45bb141427cf6598f47739.jpg', 2, 21),
+	(56, 'Bánh cuốn nóng', 30, 4.5, 350, 'https://i.pinimg.com/736x/a3/bb/c5/a3bbc555f74ccb8472facd31340740c9.jpg', 4, 19),
+    (57, 'Mì ý sốt kem hải sản', 60, 4.6, 550, 'https://i.pinimg.com/736x/84/e5/28/84e528911a5b9cc13415d87bec67ae17.jpg', 2, 20),
+	(58, 'Bún đậu mắm tôm', 40, 4.2, 400, 'https://i.pinimg.com/736x/cb/93/71/cb9371ed1a45bb141427cf6598f47739.jpg', 2, 21),
     (59, 'Bánh mì kẹp thịt nướng', 35, 4.4, 450, 'https://i.pinimg.com/736x/90/37/7a/90377a83be3de2ca6f46a8f4f78c3ac1.jpg', 7, 22),
     (60, 'Sushi cuộn trứng cá hồi', 100, 4.5, 350, 'https://i.pinimg.com/736x/f5/7b/11/f57b11bd6ad08e97c8cf4d9ae960ee58.jpg', 6, 2),
     (61, 'Cơm rang kimchi', 45, 4.3, 500, 'https://i.pinimg.com/736x/c3/82/15/c382159e5d425c9d1f159d98443117e0.jpg', 1, 3),
@@ -184,7 +184,7 @@ VALUES
     (83, 'Mì gà trứng muối', 45, 4.4, 500, 'https://static.riviu.co/960/image/2021/01/27/5a9f1b8469622adb3fed0f358cc0df25_output.jpeg', 2, 25),
     (84, 'Mì xào tôm thịt', 55, 4.5, 500, 'https://i.pinimg.com/736x/ea/04/4c/ea044c2c2a81a6b3f0398e2d54d5e59b.jpg', 2, 26),
     (85, 'Cơm rang dưa bò', 60, 4.3, 600, 'https://i.pinimg.com/736x/40/45/c5/4045c5ee9388fe1949d8449d5d884ec8.jpg', 1, 27),
-    (86, 'Cháo gà xé phay', 35, 4.5, 350, 'https://i.pinimg.com/236x/06/12/6a/06126aa1fa8ae4d83e1f924a18082bc7.jpg', 3, 28);
+    (86, 'Cháo gà xé phay', 35, 4.5, 350, 'https://i.pinimg.com/236x/06/12/6a/06126aa1fa8ae4d83e1f924a18082bc7.jpg', 3, 28),
     (87, 'Phở trộn thịt bò', 55, 4.6, 450, 'https://i.pinimg.com/736x/40/57/2a/40572a626cda8da4fa245f94d3516018.jpg', 2, 29),
     (88, 'Bánh bao chay', 15, 4.4, 300, 'https://i.pinimg.com/236x/1a/d9/50/1ad9503afea9e5a6da3cc772a4082880.jpg', 3, 1),
     (89, 'Bánh cuốn nhân thịt', 35, 4.6, 350, 'https://i.pinimg.com/736x/18/5e/ca/185eca0f3b73db7561ad25d83181baec.jpg', 4, 2),
@@ -215,7 +215,7 @@ VALUES
 
 
 -- Sprint2
--- Seed data cho bảng User
+-- Nhập dữ liệu vào bảng User
 INSERT INTO Users (user_id, username, password, email)
 VALUES
     (1, 'john_doe', 'password123', 'john.doe@example.com'),
@@ -229,7 +229,7 @@ VALUES
     (9, 'diana_prince', 'wonderwoman321', 'diana.prince@example.com'),
     (10, 'tony_stark', 'ironman123', 'tony.stark@example.com');
 
--- Seed data cho bảng Cart
+-- Nhập dữ liệu vào bảng Cart
 INSERT INTO Cart (user_id)
 VALUES 
     (1),
@@ -243,8 +243,7 @@ VALUES
     (9),
     (10);
 
-
--- Seed data cho bảng Cart_items
+-- Nhập dữ liệu vào bảng Cart_items
 INSERT INTO Cart_items (cart_id, dish_id)
 VALUES 
     (1, 1),
@@ -266,7 +265,7 @@ VALUES
     (10, 17),
     (10, 18);
 
--- Seed data cho bảng Order_items
+-- Nhập dữ liệu vào bảng Order_items
 INSERT INTO Order_items (cart_id, dish_id, price, quantity, total, status)
 VALUES 
     (1, 1, 175.00, 2, 350.00, 'confirmed'),
@@ -288,7 +287,7 @@ VALUES
     (10, 17, 165.00, 4, 660.00, 'confirmed'),
     (10, 18, 185.00, 1, 185.00, 'not_confirmed');
 
--- Seed data cho bảng Feedback
+-- Nhập dữ liệu vào bảng Feedback
 INSERT INTO Feedback (user_id, dish_id, rating, comment)
 VALUES 
     (1, 1, 4.5, 'Món ăn ngon, hương vị vừa miệng.'),

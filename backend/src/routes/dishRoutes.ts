@@ -1,8 +1,9 @@
 import { Router } from 'express';
-import { searchDishes } from '../controllers/dishController';
+import { getAllDishes, searchDishes } from '../controllers/dishController';
 
 const router = Router();
 
 router.get('/search', searchDishes);
+router.get('/', getAllDishes);
 
 export default router;

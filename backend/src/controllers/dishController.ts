@@ -23,10 +23,14 @@ export const searchDishes = async (req: Request, res: Response): Promise<void> =
         Dishes.calories, 
         Dishes.img_url, 
         Category.id AS category_id,
-        Restaurants.distance 
+        Restaurants.distance,
+        Restaurants.res_address,
+        Feedback.rating,
+        Feedback.comment
       FROM Dishes 
       INNER JOIN Category ON Dishes.category_id = Category.id
       INNER JOIN Restaurants ON Dishes.restaurant_id = Restaurants.id
+      LEFT JOIN Feedback ON Dishes.id = Feedback.dish_id
       WHERE Dishes.dish_name LIKE ?
     `;
     const [results] = await db.execute(query, [`%${q}%`]);

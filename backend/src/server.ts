@@ -8,16 +8,15 @@ dotenv.config();
 
 const app = express();
 
+// Middleware
+app.use(cors());
+
 app.use(express.json());
 // Routes declaration
 import dishesRoute from './routes/dish/dish';
 
 // Use routes
 app.use('/dish', dishesRoute);
-
-// Middleware
-app.use(cors());
-app.use(express.json());
 
 // Kết nối MySQL
 const db = mysql.createPool({

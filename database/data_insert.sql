@@ -212,3 +212,100 @@ VALUES
     ('Bánh bao thịt nướng', 25, 4.6, 300, 'https://statics.didau.com/image/2022/09/20/3bef34ffa4174ab18486cadcf89ecd36.jpg', 3, 24),
     ('Cơm gà xối mỡ', 70, 4.7, 600, 'https://i.pinimg.com/736x/f9/5b/e5/f95be598b99601877045672b467a1858.jpg', 1, 25),
     ('Bún chả nướng', 55, 4.5, 500, 'https://i.pinimg.com/736x/23/45/3f/23453fe0fa18624cf86bd8d1ec3d661e.jpg', 2, 26);
+
+
+-- Sprint2
+-- Seed data cho bảng User
+INSERT INTO Users (username, password, email)
+VALUES
+    ('john_doe', 'password123', 'john.doe@example.com'),
+    ('jane_smith', 'securePass456', 'jane.smith@example.com'),
+    ('alice_williams', 'qwerty789', 'alice.williams@example.com'),
+    ('bob_brown', 'mypassword321', 'bob.brown@example.com'),
+    ('carol_johnson', 'carol1234', 'carol.johnson@example.com'),
+    ('sarah_connor', 'terminator123', 'sarah.connor@example.com'),
+    ('bruce_wayne', 'batman456', 'bruce.wayne@example.com'),
+    ('clark_kent', 'superman789', 'clark.kent@example.com'),
+    ('diana_prince', 'wonderwoman321', 'diana.prince@example.com'),
+    ('tony_stark', 'ironman123', 'tony.stark@example.com');
+
+-- Seed data cho bảng Cart
+INSERT INTO Cart (user_id)
+VALUES 
+    (1),
+    (2),
+    (3),
+    (4),
+    (5),
+    (6),
+    (7),
+    (8),
+    (9),
+    (10);
+
+
+-- Seed data cho bảng Cart_items
+INSERT INTO Cart_items (cart_id, dish_id)
+VALUES 
+    (1, 1),
+    (1, 2),
+    (2, 3),
+    (2, 4),
+    (3, 5),
+    (3, 6),
+    (4, 7),
+    (5, 8),
+    (5, 9),
+    (6, 10),
+    (6, 11),
+    (7, 12),
+    (7, 13),
+    (8, 14),
+    (8, 15),
+    (9, 16),
+    (10, 17),
+    (10, 18);
+
+-- Seed data cho bảng Order_items
+INSERT INTO Order_items (cart_id, dish_id, price, quantity, total, status)
+VALUES 
+    (1, 1, 175.00, 2, 350.00, 'confirmed'),
+    (1, 2, 129.00, 1, 129.00, 'not_confirmed'),
+    (2, 3, 169.00, 3, 507.00, 'confirmed'),
+    (2, 4, 119.00, 1, 119.00, 'not_confirmed'),
+    (3, 5, 89.00, 4, 356.00, 'confirmed'),
+    (3, 6, 179.00, 2, 358.00, 'not_confirmed'),
+    (4, 7, 129.00, 1, 129.00, 'confirmed'),
+    (5, 8, 139.00, 3, 417.00, 'confirmed'),
+    (5, 9, 229.00, 1, 229.00, 'not_confirmed'),
+    (6, 10, 155.00, 2, 310.00, 'confirmed'),
+    (6, 11, 105.00, 1, 105.00, 'not_confirmed'),
+    (7, 12, 145.00, 3, 435.00, 'confirmed'),
+    (7, 13, 115.00, 2, 230.00, 'not_confirmed'),
+    (8, 14, 195.00, 1, 195.00, 'confirmed'),
+    (8, 15, 135.00, 2, 270.00, 'not_confirmed'),
+    (9, 16, 125.00, 1, 125.00, 'confirmed'),
+    (10, 17, 165.00, 4, 660.00, 'confirmed'),
+    (10, 18, 185.00, 1, 185.00, 'not_confirmed');
+
+-- Seed data cho bảng Feedback
+INSERT INTO Feedback (user_id, dish_id, rating, comment)
+VALUES 
+    (1, 1, 4.5, 'Món ăn ngon, hương vị vừa miệng.'),
+    (2, 2, 4.0, 'Hương vị ổn, cần cải thiện gia vị.'),
+    (3, 3, 5.0, 'Hài lòng, món ăn rất ngon.'),
+    (4, 4, 3.5, 'Món ăn ngon nhưng cần giữ nóng lâu hơn.'),
+    (5, 5, 4.7, 'Hương vị tốt, đáng giá tiền.'),
+    (1, 6, 4.2, 'Ngon nhưng giá hơi cao.'),
+    (2, 7, 4.8, 'Trình bày đẹp, món ăn rất ngon.'),
+    (3, 8, 4.3, 'Hương vị tốt, phù hợp với giá tiền.'),
+    (4, 9, 4.6, 'Món ăn vừa miệng, trình bày đẹp.'),
+    (6, 10, 4.1, 'Ngon nhưng hơi mặn một chút.'),
+    (7, 11, 4.4, 'Trình bày đẹp, hương vị ấn tượng.'),
+    (8, 12, 4.9, 'Rất ngon, xứng đáng điểm cao.'),
+    (9, 13, 3.8, 'Hương vị ổn nhưng không đặc sắc.'),
+    (10, 14, 5.0, 'Món ăn tuyệt vời, không có gì để chê.'),
+    (6, 15, 4.3, 'Ngon, nhưng giá hơi đắt.'),
+    (7, 16, 4.5, 'Hương vị rất tinh tế, nên thử.'),
+    (8, 17, 4.6, 'Món ăn ngon, rất hài lòng.'),
+    (9, 18, 4.7, 'Hương vị tuyệt vời, sẽ đặt lại.');

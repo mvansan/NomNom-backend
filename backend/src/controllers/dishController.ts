@@ -1,15 +1,18 @@
-import { Request, Response } from 'express';
-import db from '../config/db';
-import { Dish } from '../models/dish';
+import { Request, Response } from "express";
+import db from "../config/db";
+import { Dish } from "../models/dish";
 
-export const searchDishes = async (req: Request, res: Response): Promise<void> => {
+export const searchDishes = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
     const { q } = req.query;
 
-    if (!q || typeof q !== 'string') {
+    if (!q || typeof q !== "string") {
       res.status(400).json({
         success: false,
-        message: 'Tên món ăn (q) là bắt buộc và phải là chuỗi.',
+        message: "Tên món ăn (q) là bắt buộc và phải là chuỗi.",
       });
       return;
     }
@@ -40,7 +43,7 @@ export const searchDishes = async (req: Request, res: Response): Promise<void> =
     if (dishes.length === 0) {
       res.status(404).json({
         success: false,
-        message: 'Không tìm thấy món ăn nào với từ khóa bạn nhập.',
+        message: "Không tìm thấy món ăn nào với từ khóa bạn nhập.",
       });
       return;
     }
@@ -50,15 +53,18 @@ export const searchDishes = async (req: Request, res: Response): Promise<void> =
       data: dishes,
     });
   } catch (error) {
-    console.error('Error searching dishes:', error);
+    console.error("Error searching dishes:", error);
     res.status(500).json({
       success: false,
-      message: 'Lỗi hệ thống khi tìm kiếm món ăn.',
+      message: "Lỗi hệ thống khi tìm kiếm món ăn.",
     });
   }
 };
 
-export const getAllDishes = async (req: Request, res: Response): Promise<void> => {
+export const getAllDishes = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
     const query = `
       SELECT 
@@ -79,14 +85,61 @@ export const getAllDishes = async (req: Request, res: Response): Promise<void> =
       LEFT JOIN Feedback ON Dishes.id = Feedback.dish_id
       ORDER BY Dishes.average_rating DESC, Restaurants.distance ASC
     `;
-    const [result] = await db.query(query); 
-    res.status(200).json(result); 
+    const [result] = await db.query(query);
+    res.status(200).json(result);
   } catch (error) {
-    console.error('Error getting all dishes:', error);
+    console.error("Error getting all dishes:", error);
     res.status(500).json({
       success: false,
-      message: 'Lỗi hệ thống khi lấy danh sách món ăn.',
+      message: "Lỗi hệ thống khi lấy danh sách món ăn.",
     });
   }
-}
+};
 
+export const getDishesById = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const { id } = req.params; // Lấy id từ params
+
+    if (!id) {
+      res.status(400).json({
+        success: false,
+        message: "Thiếu tham số id.",
+      });
+      return;
+    }
+
+    const query = `
+      SELECT 
+        Dishes.id, 
+        Dishes.dish_name, 
+        Dishes.price, 
+        Dishes.average_rating, 
+        Dishes.calories, 
+        Dishes.img_url, 
+        Category.id AS category_id,
+        Restaurants.distance,
+        Restaurants.res_address,
+        Feedback.rating,
+        Feedback.comment 
+      FROM Dishes 
+      INNER JOIN Category ON Dishes.category_id = Category.id
+      INNER JOIN Restaurants ON Dishes.restaurant_id = Restaurants.id
+      LEFT JOIN Feedback ON Dishes.id = Feedback.dish_id
+      WHERE Dishes.id = ? -- Lọc theo id
+      ORDER BY Dishes.average_rating DESC, Restaurants.distance ASC
+    `;
+
+    const [result] = await db.query(query, [id]); // Thêm giá trị id vào query
+
+    res.status(200).json(result);
+  } catch (error) {
+    console.error("Error getting dish by id:", error);
+    res.status(500).json({
+      success: false,
+      message: "Lỗi hệ thống khi lấy thông tin món ăn.",
+    });
+  }
+};

@@ -233,26 +233,26 @@ VALUES
 
 
 -- Seed data cho bảng Cart_items
-INSERT INTO Cart_items (cart_id, dish_id)
+INSERT INTO Cart_items (user_id, dish_id, quantity)
 VALUES 
-    (1, 1),
-    (1, 2),
-    (2, 3),
-    (2, 4),
-    (3, 5),
-    (3, 6),
-    (4, 7),
-    (5, 8),
-    (5, 9),
-    (6, 10),
-    (6, 11),
-    (7, 12),
-    (7, 13),
-    (8, 14),
-    (8, 15),
-    (9, 16),
-    (10, 17),
-    (10, 18);
+    (1, 1, 2),
+    (1, 2, 1),
+    (2, 3, 3),
+    (2, 4, 1),
+    (3, 5, 4),
+    (3, 6, 2),
+    (4, 7, 1),
+    (5, 8, 3),
+    (5, 9, 1),
+    (6, 10, 2),
+    (6, 11, 1),
+    (7, 12, 3),
+    (7, 13, 2),
+    (8, 14, 1),
+    (8, 15, 2),
+    (9, 16, 1),
+    (10, 17, 4),
+    (10, 18, 1);
 
 -- Seed data cho bảng Order_items
 INSERT INTO Order_items (cart_id, dish_id, price, quantity, total, status)

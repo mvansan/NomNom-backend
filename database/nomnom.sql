@@ -47,6 +47,7 @@ CREATE TABLE Cart_items (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
     dish_id INT NOT NULL,
+    quantity INT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES Users(user_id),
     FOREIGN KEY (dish_id) REFERENCES Dishes(id)
 );

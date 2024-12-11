@@ -216,18 +216,18 @@ VALUES
 
 -- Sprint2
 -- Seed data cho bảng User
-INSERT INTO Users (username, password, email)
+INSERT INTO Users (user_id, username, password, email)
 VALUES
-    ('john_doe', 'password123', 'john.doe@example.com'),
-    ('jane_smith', 'securePass456', 'jane.smith@example.com'),
-    ('alice_williams', 'qwerty789', 'alice.williams@example.com'),
-    ('bob_brown', 'mypassword321', 'bob.brown@example.com'),
-    ('carol_johnson', 'carol1234', 'carol.johnson@example.com'),
-    ('sarah_connor', 'terminator123', 'sarah.connor@example.com'),
-    ('bruce_wayne', 'batman456', 'bruce.wayne@example.com'),
-    ('clark_kent', 'superman789', 'clark.kent@example.com'),
-    ('diana_prince', 'wonderwoman321', 'diana.prince@example.com'),
-    ('tony_stark', 'ironman123', 'tony.stark@example.com');
+    (1, 'john_doe', 'password123', 'john.doe@example.com'),
+    (2, 'jane_smith', 'securePass456', 'jane.smith@example.com'),
+    (3, 'alice_williams', 'qwerty789', 'alice.williams@example.com'),
+    (4, 'bob_brown', 'mypassword321', 'bob.brown@example.com'),
+    (5, 'carol_johnson', 'carol1234', 'carol.johnson@example.com'),
+    (6, 'sarah_connor', 'terminator123', 'sarah.connor@example.com'),
+    (7, 'bruce_wayne', 'batman456', 'bruce.wayne@example.com'),
+    (8, 'clark_kent', 'superman789', 'clark.kent@example.com'),
+    (9, 'diana_prince', 'wonderwoman321', 'diana.prince@example.com'),
+    (10, 'tony_stark', 'ironman123', 'tony.stark@example.com');
 
 -- Seed data cho bảng Cart_items
 INSERT INTO Cart_items (user_id, dish_id, quantity)

@@ -4,7 +4,7 @@ USE NomNom;
 
 -- Tạo bảng Users
 CREATE TABLE Users (
-    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT PRIMARY KEY,
     username VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE
@@ -28,13 +28,13 @@ CREATE TABLE Category (
 
 -- Tạo bảng Dishes
 CREATE TABLE Dishes (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id INT PRIMARY KEY,
     dish_name VARCHAR(255) NOT NULL,
     price INT NOT NULL,
     average_rating DECIMAL(3, 1) CHECK (average_rating BETWEEN 1.0 AND 5.0),
     calories INT NOT NULL,
     img_url VARCHAR(2083),
-    desrip TEXT NOT NULL,
+    desrip VARCHAR(2083) NOT NULL,
     category_id INT,
     restaurant_id INT,
     FOREIGN KEY (category_id) REFERENCES Category(id) ON DELETE CASCADE,

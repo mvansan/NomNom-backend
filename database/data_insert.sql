@@ -229,9 +229,6 @@ VALUES
     ('diana_prince', 'wonderwoman321', 'diana.prince@example.com'),
     ('tony_stark', 'ironman123', 'tony.stark@example.com');
 
--- Seed data cho bảng Cart
-
-
 -- Seed data cho bảng Cart_items
 INSERT INTO Cart_items (user_id, dish_id, quantity)
 VALUES 
@@ -615,6 +612,7 @@ VALUES
     (1, 113, 4, 'Ngon nhưng cần cải thiện phục vụ.'),
     (2, 113, 5, 'Món ăn rất ngon, trình bày đẹp.'),
     (3, 113, 4, 'Hương vị tốt, giá hợp lý.');
+    
 -- Nhập dữ liệu vào bảng Favorite_dish
 INSERT INTO Favorite_dish (user_id, dish_id, is_favorite)
 VALUES

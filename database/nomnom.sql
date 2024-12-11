@@ -75,3 +75,12 @@ CREATE TABLE Feedback (
     FOREIGN KEY (user_id) REFERENCES Users(user_id),
     FOREIGN KEY (dish_id) REFERENCES Dishes(id)
 );
+-- Tạo bảng Favorite_dish
+CREATE TABLE Favorite_dish (
+    user_id INT NOT NULL,
+    dish_id INT NOT NULL,
+    is_favorite BOOLEAN NOT NULL,
+    PRIMARY KEY (user_id, dish_id),
+    FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (dish_id) REFERENCES Dishes(id) ON DELETE CASCADE
+);

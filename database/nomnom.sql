@@ -4,7 +4,7 @@ USE NomNom;
 
 -- Tạo bảng Users
 CREATE TABLE Users (
-    user_id INT PRIMARY KEY,
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE
@@ -28,12 +28,13 @@ CREATE TABLE Category (
 
 -- Tạo bảng Dishes
 CREATE TABLE Dishes (
-    id INT PRIMARY KEY,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     dish_name VARCHAR(255) NOT NULL,
     price INT NOT NULL,
     average_rating DECIMAL(3, 1) CHECK (average_rating BETWEEN 1.0 AND 5.0),
     calories INT NOT NULL,
     img_url VARCHAR(2083),
+    desrip TEXT NOT NULL,
     category_id INT,
     restaurant_id INT,
     FOREIGN KEY (category_id) REFERENCES Category(id) ON DELETE CASCADE,
@@ -41,32 +42,26 @@ CREATE TABLE Dishes (
 );
 
 -- Sprint2 
--- Tạo bảng Cart
-CREATE TABLE Cart (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES Users(user_id)
-);
-
 -- Tạo bảng Cart_items
 CREATE TABLE Cart_items (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    cart_id INT NOT NULL,
+    user_id INT NOT NULL,
     dish_id INT NOT NULL,
-    FOREIGN KEY (cart_id) REFERENCES Cart(id),
+    quantity INT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES Users(user_id),
     FOREIGN KEY (dish_id) REFERENCES Dishes(id)
 );
 
 -- Tạo bảng Order_items
 CREATE TABLE Order_items (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    cart_id INT NOT NULL,
+    user_id INT NOT NULL,
     dish_id INT NOT NULL,
     price DECIMAL(10, 2) NOT NULL,
     quantity INT NOT NULL,
     total DECIMAL(10, 2),
     status ENUM('confirmed', 'not_confirmed') DEFAULT 'not_confirmed',
-    FOREIGN KEY (cart_id) REFERENCES Cart(id),
+    FOREIGN KEY (user_id) REFERENCES Users(user_id),
     FOREIGN KEY (dish_id) REFERENCES Dishes(id)
 );
 
@@ -79,14 +74,4 @@ CREATE TABLE Feedback (
     comment TEXT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES Users(user_id),
     FOREIGN KEY (dish_id) REFERENCES Dishes(id)
-);
-
--- Tạo bảng Favorite_dish
-CREATE TABLE Favorite_dish (
-    user_id INT NOT NULL,
-    dish_id INT NOT NULL,
-    is_favorite BOOLEAN NOT NULL,
-    PRIMARY KEY (user_id, dish_id),
-    FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE,
-    FOREIGN KEY (dish_id) REFERENCES Dishes(id) ON DELETE CASCADE
 );

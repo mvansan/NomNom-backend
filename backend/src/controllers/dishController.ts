@@ -119,6 +119,7 @@ export const getDishesById = async (
         Dishes.average_rating, 
         Dishes.calories, 
         Dishes.img_url, 
+        Dishes.desrip, 
         Category.id AS category_id,
         Restaurants.distance,
         Restaurants.res_address,

@@ -185,7 +185,7 @@ VALUES
     (84, 'Mì xào tôm thịt', 55, 4.5, 500, 'https://i.pinimg.com/736x/ea/04/4c/ea044c2c2a81a6b3f0398e2d54d5e59b.jpg', 'Mì xào hấp dẫn với tôm và thịt.', 2, 26),
     (85, 'Cơm rang dưa bò', 60, 4.3, 600, 'https://i.pinimg.com/736x/40/45/c5/4045c5ee9388fe1949d8449d5d884ec8.jpg', 'Cơm rang giòn kết hợp dưa và thịt bò.', 1, 27),
     (86, 'Cháo gà xé phay', 35, 4.5, 350, 'https://i.pinimg.com/236x/06/12/6a/06126aa1fa8ae4d83e1f924a18082bc7.jpg', 'Cháo gà thơm ngon, bổ dưỡng.', 3, 28),
-    (87, 'Phở trộn thịt bò', 55, 4.6, 450, 'https://i.pinimg.com/736x/40/57/2a/40572a626cda8da4fa245f94d3516018.jpg', 'Phở trộn đậm đà với thịt bò.', 2, 29),
+    (87, 'Phở trộn thịt bò', 55, 4.6, 450, 'https://i.pinimg.com/736x/40/57/2a/40572a626c99e2456e91bd78e7876f96.jpg', 'Phở trộn đậm đà với thịt bò.', 2, 29),
     (88, 'Bánh bao chay', 15, 4.4, 300, 'https://i.pinimg.com/236x/1a/d9/50/1ad9503afea9e5a6da3cc772a4082880.jpg', 'Bánh bao chay mềm mịn, nhân thơm ngon.', 3, 1),
     (89, 'Bánh cuốn nhân thịt', 35, 4.6, 350, 'https://i.pinimg.com/736x/18/5e/ca/185eca0f3b73db7561ad25d83181baec.jpg', 'Bánh cuốn nóng hổi với nhân thịt đậm đà.', 4, 2),
     (90, 'Phở gà', 50, 4.7, 400, 'https://i.pinimg.com/236x/fb/e8/e2/fbe8e2a3ef0d445f185e26bd3b8c6837.jpg', 'Phở gà thơm ngon, nước dùng thanh ngọt.', 2, 3),

@@ -14,7 +14,11 @@ app.use(cors());
 app.use(express.json());
 // Routes declaration
 import dishesRoute from "./routes/dish/dish";
-import { getDishesById } from "./controllers/dishController";
+import {
+  getDishesById,
+  getFeedbackByDishId,
+  updateAverageRate,
+} from "./controllers/dishController";
 
 // Use routes
 app.use("/dish", dishesRoute);
@@ -43,6 +47,9 @@ app.get("/", async (req: Request, res: Response) => {
 
 app.use("/api/dishes", dishRoutes);
 app.get("/api/dishes/:id", getDishesById);
+
+app.get("/api/dishes/feedback/:id", getFeedbackByDishId);
+app.get("/api/dishes/rate/:id", updateAverageRate);
 
 // Start server
 const PORT = process.env.PORT || 5000;

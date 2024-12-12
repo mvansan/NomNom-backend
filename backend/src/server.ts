@@ -6,7 +6,11 @@ import dishRoutes from "./routes/dishRoutes";
 import dishesRoute from "./routes/dish/dish";
 import cartRoute from "./routes/cart/cart";
 import orderRoute from "./routes/order/order";
-import { getDishesById } from "./controllers/dishController";
+import {
+  getDishesById,
+  getFeedbackByDishId,
+  updateAverageRate,
+} from "./controllers/dishController";
 
 dotenv.config();
 
@@ -47,6 +51,8 @@ app.use("/cart", cartRoute);
 app.use("/order", orderRoute);
 app.use("/api/dishes", dishRoutes);
 app.get("/api/dishes/:id", getDishesById);
+app.get("/api/dishes/feedback/:id", getFeedbackByDishId);
+app.get("/api/dishes/rate/:id", updateAverageRate);
 
 // Start server
 const PORT = process.env.PORT || 5000;

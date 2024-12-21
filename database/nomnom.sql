@@ -4,10 +4,14 @@ USE NomNom;
 
 -- Tạo bảng Users
 CREATE TABLE Users (
-    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT PRIMARY KEY,
     username VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL UNIQUE
+    email VARCHAR(255) NOT NULL UNIQUE,
+    image VARCHAR(2083),
+    avatar VARCHAR(2083),
+    address TEXT,
+    phone VARCHAR(15)
 );
 
 -- Tạo bảng Restaurants

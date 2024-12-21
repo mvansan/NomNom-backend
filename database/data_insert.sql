@@ -216,18 +216,19 @@ VALUES
 
 -- Sprint2
 -- Seed data cho bảng User
-INSERT INTO Users (username, password, email)
-VALUES
-    ('john_doe', 'password123', 'john.doe@example.com'),
-    ('jane_smith', 'securePass456', 'jane.smith@example.com'),
-    ('alice_williams', 'qwerty789', 'alice.williams@example.com'),
-    ('bob_brown', 'mypassword321', 'bob.brown@example.com'),
-    ('carol_johnson', 'carol1234', 'carol.johnson@example.com'),
-    ('sarah_connor', 'terminator123', 'sarah.connor@example.com'),
-    ('bruce_wayne', 'batman456', 'bruce.wayne@example.com'),
-    ('clark_kent', 'superman789', 'clark.kent@example.com'),
-    ('diana_prince', 'wonderwoman321', 'diana.prince@example.com'),
-    ('tony_stark', 'ironman123', 'tony.stark@example.com');
+INSERT INTO Users (user_id, username, password, email, image, avatar, address, phone)  
+VALUES  
+    (1, 'john_doe', 'password123', 'john.doe@example.com', 'https://drive.google.com/file/d/1TCwVYLh9Z_Q6xBEyjVrDtMOt2LpJm_yb/view?usp=drive_link', 'https://drive.google.com/file/d/1Q1-EPPIv5-InpR8lMqvm3aFAezfpjnLk/view?usp=drive_link', '123 Elm Street, Springfield', '+1234567890'),  
+    (2, 'jane_smith', 'securePass456', 'jane.smith@example.com', 'https://drive.google.com/file/d/1TCwVYLh9Z_Q6xBEyjVrDtMOt2LpJm_yb/view?usp=drive_link', 'https://drive.google.com/file/d/1Q1-EPPIv5-InpR8lMqvm3aFAezfpjnLk/view?usp=drive_link', '456 Oak Avenue, Gotham', '+9876543210'),  
+    (3, 'alice_williams', 'qwerty789', 'alice.williams@example.com', 'https://drive.google.com/file/d/1TCwVYLh9Z_Q6xBEyjVrDtMOt2LpJm_yb/view?usp=drive_link', 'https://drive.google.com/file/d/1Q1-EPPIv5-InpR8lMqvm3aFAezfpjnLk/view?usp=drive_link', '789 Pine Road, Metropolis', '+1122334455'),  
+    (4, 'bob_brown', 'mypassword321', 'bob.brown@example.com', 'https://drive.google.com/file/d/1TCwVYLh9Z_Q6xBEyjVrDtMOt2LpJm_yb/view?usp=drive_link', 'https://drive.google.com/file/d/1Q1-EPPIv5-InpR8lMqvm3aFAezfpjnLk/view?usp=drive_link', '321 Maple Lane, Star City', '+9988776655'),  
+    (5, 'carol_johnson', 'carol1234', 'carol.johnson@example.com', 'https://drive.google.com/file/d/1TCwVYLh9Z_Q6xBEyjVrDtMOt2LpJm_yb/view?usp=drive_link', 'https://drive.google.com/file/d/1Q1-EPPIv5-InpR8lMqvm3aFAezfpjnLk/view?usp=drive_link', '654 Birch Blvd, Central City', '+5566778899'),  
+    (6, 'sarah_connor', 'terminator123', 'sarah.connor@example.com', 'https://drive.google.com/file/d/1TCwVYLh9Z_Q6xBEyjVrDtMOt2LpJm_yb/view?usp=drive_link', 'https://drive.google.com/file/d/1Q1-EPPIv5-InpR8lMqvm3aFAezfpjnLk/view?usp=drive_link', '987 Ash Street, Cyberdyne', '+1231231234'),  
+    (7, 'bruce_wayne', 'batman456', 'bruce.wayne@example.com', 'https://drive.google.com/file/d/1TCwVYLh9Z_Q6xBEyjVrDtMOt2LpJm_yb/view?usp=drive_link', 'https://drive.google.com/file/d/1Q1-EPPIv5-InpR8lMqvm3aFAezfpjnLk/view?usp=drive_link', '100 Wayne Manor, Gotham', '+4564564567'),  
+    (8, 'clark_kent', 'superman789', 'clark.kent@example.com', 'https://drive.google.com/file/d/1TCwVYLh9Z_Q6xBEyjVrDtMOt2LpJm_yb/view?usp=drive_link', 'https://drive.google.com/file/d/1Q1-EPPIv5-InpR8lMqvm3aFAezfpjnLk/view?usp=drive_link', '200 Smallville Farm, Kansas', '+7897897890'),  
+    (9, 'diana_prince', 'wonderwoman321', 'diana.prince@example.com', 'https://drive.google.com/file/d/1TCwVYLh9Z_Q6xBEyjVrDtMOt2LpJm_yb/view?usp=drive_link', 'https://drive.google.com/file/d/1Q1-EPPIv5-InpR8lMqvm3aFAezfpjnLk/view?usp=drive_link', '300 Amazon Island, Themyscira', '+3213214321'),  
+    (10, 'tony_stark', 'ironman123', 'tony.stark@example.com', 'https://drive.google.com/file/d/1TCwVYLh9Z_Q6xBEyjVrDtMOt2LpJm_yb/view?usp=drive_link', 'https://drive.google.com/file/d/1Q1-EPPIv5-InpR8lMqvm3aFAezfpjnLk/view?usp=drive_link', '10880 Malibu Point, Malibu', '+6546546543');  
+
 
 -- Seed data cho bảng Cart_items
 INSERT INTO Cart_items (user_id, dish_id, quantity)

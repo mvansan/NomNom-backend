@@ -29,4 +29,23 @@ export default class Order {
       throw error;
     }
   }
+
+  //==================================================================================
+  static async getOrdersHistory(userId: number) {
+    try {
+      const [rows] = await db.execute("CALL get_orders_history(?)", [userId]);
+      return rows;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  //==================================================================================
+  static async rateDish(userId: number, orderId: number,dishId: number, rating: number, comment: string) {
+    try {
+      await db.execute("CALL rate_dish(?, ?, ?, ?, ?)", [userId, orderId, dishId, rating, comment]);
+    } catch (error) {
+      throw error;
+    }
+  }
 }

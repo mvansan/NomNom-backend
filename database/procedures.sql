@@ -1,4 +1,4 @@
-USE nomnom;
+USE NomNom;
 
 DELIMITER $$
 
@@ -181,3 +181,66 @@ END$$
 DELIMITER ;
 
 
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS get_orders_history$$
+
+CREATE PROCEDURE get_orders_history(IN p_user_id INT)
+BEGIN
+    SELECT 
+        oi.id AS order_id,
+        oi.dish_id AS dish_id,
+        d.dish_name AS name,
+        oi.quantity,
+        oi.total AS total_price,
+        d.img_url AS image,
+        CASE 
+            WHEN oi.status = 'confirmed' THEN TRUE 
+            ELSE FALSE 
+        END AS confirmed
+    FROM 
+        Order_items oi
+    JOIN 
+        Dishes d ON oi.dish_id = d.id
+    WHERE 
+        oi.user_id = p_user_id AND oi.status = 'confirmed'
+    ORDER BY oi.id DESC;
+END$$
+
+DELIMITER ;
+
+
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS rate_dish$$
+
+CREATE PROCEDURE rate_dish(
+    IN p_user_id INT, 
+    IN p_order_id INT, 
+    IN p_dish_id INT, 
+    IN p_rating DECIMAL(2, 1),
+    IN p_comment TEXT
+)
+BEGIN
+    DECLARE order_status VARCHAR(255);
+    
+    SELECT status INTO order_status
+    FROM Order_items
+    WHERE id = p_order_id AND user_id = p_user_id;
+    
+    IF order_status IS NULL THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Order not found';
+    END IF;
+    
+    IF order_status != 'confirmed' THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Order not confirmed';
+    END IF;
+    
+    INSERT INTO Feedback (user_id, dish_id, rating, comment)
+    VALUES (p_user_id, p_dish_id, p_rating, p_comment)
+    ON DUPLICATE KEY UPDATE rating = VALUES(rating), comment = VALUES(comment);
+    
+    SELECT 'Dish rated successfully' AS message;
+END$$
+
+DELIMITER ;

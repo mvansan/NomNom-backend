@@ -236,8 +236,8 @@ BEGIN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Order not confirmed';
     END IF;
     
-    INSERT INTO Feedback (user_id, dish_id, rating, comment)
-    VALUES (p_user_id, p_dish_id, p_rating, p_comment)
+    INSERT INTO Feedback (user_id, dish_id, order_id, rating, comment)
+    VALUES (p_user_id, p_dish_id, p_order_id, p_rating, p_comment)
     ON DUPLICATE KEY UPDATE rating = VALUES(rating), comment = VALUES(comment);
     
     SELECT 'Dish rated successfully' AS message;

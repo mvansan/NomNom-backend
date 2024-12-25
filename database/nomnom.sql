@@ -79,7 +79,8 @@ CREATE TABLE Feedback (
     comment TEXT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES Users(user_id),
     FOREIGN KEY (dish_id) REFERENCES Dishes(id),
-    FOREIGN KEY (order_id) REFERENCES Order_items(id)
+    FOREIGN KEY (order_id) REFERENCES Order_items(id),
+    UNIQUE KEY unique_feedback (user_id, dish_id, order_id)
 );
 -- Tạo bảng Favorite_dish
 CREATE TABLE Favorite_dish (

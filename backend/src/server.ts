@@ -3,6 +3,8 @@ import cors from "cors";
 import dotenv from "dotenv";
 import mysql from "mysql2/promise";
 import path from "path";
+import cookieParser from "cookie-parser";
+import userRoute from "./routes/user/user";
 import dishRoutes from "./routes/dishRoutes";
 import dishesRoute from "./routes/dish/dish";
 import cartRoute from "./routes/cart/cart";
@@ -22,7 +24,7 @@ const app = express();
 
 // Middleware
 app.use(cors());
-
+app.use(cookieParser());
 app.use(express.json());
 
 // Use routes
@@ -50,6 +52,7 @@ app.get("/", async (req: Request, res: Response) => {
   }
 });
 
+app.use("/user", userRoute);
 app.use("/dish", dishesRoute);
 app.use("/cart", cartRoute);
 app.use("/order", orderRoute);

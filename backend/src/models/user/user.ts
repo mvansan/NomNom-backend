@@ -17,7 +17,7 @@ export default class User {
 
       if (userRows.length === 0) {
         const registerUserQuery =
-          "INSERT INTO users (email, username, password) VALUES (?, ?, ?)";
+          "INSERT INTO Users (email, username, password) VALUES (?, ?, ?)";
         await db.execute(registerUserQuery, [email, name, "google"]);
       }
 
@@ -63,7 +63,7 @@ export default class User {
 
       // Thêm người dùng mới vào cơ sở dữ liệu
       const registerUserQuery =
-        "INSERT INTO users (email, username, password) VALUES (?, ?, ?)";
+        "INSERT INTO Users (email, username, password) VALUES (?, ?, ?)";
       const [result]: [any[], any[]] = await db.execute(registerUserQuery, [
         email,
         username,
@@ -72,7 +72,7 @@ export default class User {
 
       // Truy vấn lại thông tin người dùng để lấy user_id
       const [userResult]: [any[], any[]] = await db.execute(
-        "SELECT user_id FROM users WHERE email = ?",
+        "SELECT user_id FROM Users WHERE email = ?",
         [email]
       );
 

@@ -11,8 +11,7 @@ const db = mysql.createPool({
   password: process.env.DB_PASS || "",
   database: process.env.DB_NAME || "test",
   ssl: {
-    // ca: process.env.CA_CERT,
-    rejectUnauthorized: false,
+    ca: process.env.CA_CERT,
   },
   waitForConnections: true,
   connectionLimit: 10,

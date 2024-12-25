@@ -6,6 +6,7 @@ import dishRoutes from "./routes/dishRoutes";
 import dishesRoute from "./routes/dish/dish";
 import cartRoute from "./routes/cart/cart";
 import orderRoute from "./routes/order/order";
+import favoriteRoute from "./routes/favoriteRoutes";
 import {
   getDishesById,
   getFeedbackByDishId,
@@ -49,6 +50,7 @@ app.get("/", async (req: Request, res: Response) => {
 app.use("/dish", dishesRoute);
 app.use("/cart", cartRoute);
 app.use("/order", orderRoute);
+app.use("/favorite", favoriteRoute);
 app.use("/api/dishes", dishRoutes);
 app.get("/api/dishes/:id", getDishesById);
 app.get("/api/dishes/feedback/:id", getFeedbackByDishId);

@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import db from "../../config/db";
 import axios from "axios"; // For making HTTP requests to Google
 import User from "../../models/user/user";
-import jwt from "jsonwebtoken";
 
 export const getUserById = async (
   req: Request,

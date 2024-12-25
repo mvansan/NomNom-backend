@@ -244,3 +244,53 @@ BEGIN
 END$$
 
 DELIMITER ;
+
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS add_favorite$$
+
+CREATE PROCEDURE add_favorite(
+    IN p_user_id INT, 
+    IN p_dish_id INT
+)
+BEGIN
+    INSERT INTO Favorite_dish (user_id, dish_id, is_favorite)
+    VALUES (p_user_id, p_dish_id, TRUE)
+    ON DUPLICATE KEY UPDATE is_favorite = TRUE;
+END$$
+
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS get_favorites$$
+
+CREATE PROCEDURE get_favorites(
+    IN p_user_id INT
+)
+BEGIN
+    SELECT 
+        d.id AS dish_id,
+        d.dish_name AS name,
+        d.price,
+        d.img_url AS image
+    FROM 
+        Favorite_dish f
+    JOIN 
+        Dishes d ON f.dish_id = d.id
+    WHERE 
+        f.user_id = p_user_id AND f.is_favorite = TRUE;
+END$$
+
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS remove_favorite$$
+
+CREATE PROCEDURE remove_favorite(
+    IN p_user_id INT, 
+    IN p_dish_id INT
+)
+BEGIN
+    DELETE FROM Favorite_dish
+    WHERE user_id = p_user_id AND dish_id = p_dish_id;
+END$$
+
+DELIMITER ;

@@ -32,13 +32,13 @@ CREATE TABLE Category (
 
 -- Tạo bảng Dishes
 CREATE TABLE Dishes (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id INT PRIMARY KEY,
     dish_name VARCHAR(255) NOT NULL,
     price INT NOT NULL,
     average_rating DECIMAL(3, 1) CHECK (average_rating BETWEEN 1.0 AND 5.0),
     calories INT NOT NULL,
     img_url VARCHAR(2083),
-    desrip TEXT NOT NULL,
+    desrip VARCHAR(2083) NOT NULL,
     category_id INT,
     restaurant_id INT,
     FOREIGN KEY (category_id) REFERENCES Category(id) ON DELETE CASCADE,
@@ -74,10 +74,13 @@ CREATE TABLE Feedback (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
     dish_id INT NOT NULL,
+    order_id INT NOT NULL,
     rating DECIMAL(2, 1) CHECK (rating BETWEEN 1.0 AND 5.0),
     comment TEXT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES Users(user_id),
-    FOREIGN KEY (dish_id) REFERENCES Dishes(id)
+    FOREIGN KEY (dish_id) REFERENCES Dishes(id),
+    FOREIGN KEY (order_id) REFERENCES Order_items(id),
+    UNIQUE KEY unique_feedback (user_id, dish_id, order_id)
 );
 -- Tạo bảng Favorite_dish
 CREATE TABLE Favorite_dish (

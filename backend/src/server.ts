@@ -2,7 +2,19 @@ import express, { Request, Response } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import mysql from "mysql2/promise";
+import path from "path";
 import dishRoutes from "./routes/dishRoutes";
+import dishesRoute from "./routes/dish/dish";
+import cartRoute from "./routes/cart/cart";
+import orderRoute from "./routes/order/order";
+import favoriteRoute from "./routes/favoriteRoutes";
+import {
+  getDishesById,
+  getFeedbackByDishId,
+  updateAverageRate,
+} from "./controllers/dishController";
+import { upload, uploadFile } from "./controllers/file/file";
+import { getUserById, updateUser } from "./controllers/user/user";
 
 dotenv.config();
 
@@ -12,12 +24,6 @@ const app = express();
 app.use(cors());
 
 app.use(express.json());
-// Routes declaration
-import dishesRoute from "./routes/dish/dish";
-import { getDishesById } from "./controllers/dishController";
-import { upload, uploadFile } from "./controllers/file/file";
-import path from "path";
-import { getUserById, updateUser } from "./controllers/user/user";
 
 // Use routes
 app.use("/dish", dishesRoute);
@@ -44,8 +50,14 @@ app.get("/", async (req: Request, res: Response) => {
   }
 });
 
+app.use("/dish", dishesRoute);
+app.use("/cart", cartRoute);
+app.use("/order", orderRoute);
+app.use("/favorite", favoriteRoute);
 app.use("/api/dishes", dishRoutes);
 app.get("/api/dishes/:id", getDishesById);
+app.get("/api/dishes/feedback/:id", getFeedbackByDishId);
+app.get("/api/dishes/rate/:id", updateAverageRate);
 
 app.get("/api/user/:id", getUserById);
 app.put("/api/user/:id", updateUser);

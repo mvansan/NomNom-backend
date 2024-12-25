@@ -15,6 +15,9 @@ app.use(express.json());
 // Routes declaration
 import dishesRoute from "./routes/dish/dish";
 import { getDishesById } from "./controllers/dishController";
+import { upload, uploadFile } from "./controllers/file/file";
+import path from "path";
+import { getUserById, updateUser } from "./controllers/user/user";
 
 // Use routes
 app.use("/dish", dishesRoute);
@@ -43,6 +46,12 @@ app.get("/", async (req: Request, res: Response) => {
 
 app.use("/api/dishes", dishRoutes);
 app.get("/api/dishes/:id", getDishesById);
+
+app.get("/api/user/:id", getUserById);
+app.put("/api/user/:id", updateUser);
+
+app.post("/api/files", upload.single("file"), uploadFile);
+app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 
 // Start server
 const PORT = process.env.PORT || 5000;

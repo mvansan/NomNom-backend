@@ -229,7 +229,6 @@ VALUES
     (9, 'diana_prince', 'wonderwoman321', 'diana.prince@example.com', 'https://drive.google.com/file/d/1TCwVYLh9Z_Q6xBEyjVrDtMOt2LpJm_yb/view?usp=drive_link', 'https://drive.google.com/file/d/1Q1-EPPIv5-InpR8lMqvm3aFAezfpjnLk/view?usp=drive_link', '300 Amazon Island, Themyscira', '+3213214321'),  
     (10, 'tony_stark', 'ironman123', 'tony.stark@example.com', 'https://drive.google.com/file/d/1TCwVYLh9Z_Q6xBEyjVrDtMOt2LpJm_yb/view?usp=drive_link', 'https://drive.google.com/file/d/1Q1-EPPIv5-InpR8lMqvm3aFAezfpjnLk/view?usp=drive_link', '10880 Malibu Point, Malibu', '+6546546543');  
 
-
 -- Seed data cho bảng Cart_items
 INSERT INTO Cart_items (user_id, dish_id, quantity)
 VALUES 

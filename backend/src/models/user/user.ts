@@ -10,7 +10,7 @@ export default class User {
     picture: string
   ): Promise<any> {
     try {
-      const checkUserQuery = "SELECT * FROM users WHERE email = ?";
+      const checkUserQuery = "SELECT * FROM Users WHERE email = ?";
       const [userRows]: [any[], any[]] = await db.execute(checkUserQuery, [
         email,
       ]);
@@ -51,7 +51,7 @@ export default class User {
     try {
       // Kiểm tra xem người dùng đã tồn tại trong cơ sở dữ liệu chưa
       const checkUserQuery =
-        "SELECT COUNT(*) AS count FROM users WHERE email = ?";
+        "SELECT COUNT(*) AS count FROM Users WHERE email = ?";
       const [rows]: [any[], any[]] = await db.execute(checkUserQuery, [email]);
 
       if (rows[0].count > 0) {
@@ -88,7 +88,7 @@ export default class User {
   static async login(email: string, password: string): Promise<any> {
     try {
       // Kiểm tra xem người dùng có tồn tại trong cơ sở dữ liệu không
-      const checkUserQuery = "SELECT * FROM users WHERE email = ?";
+      const checkUserQuery = "SELECT * FROM Users WHERE email = ?";
       const [rows]: [any[], any[]] = await db.execute(checkUserQuery, [email]);
 
       if (rows.length === 0) {

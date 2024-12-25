@@ -2,6 +2,7 @@ import express, { Request, Response } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import mysql from "mysql2/promise";
+import path from "path";
 import dishRoutes from "./routes/dishRoutes";
 import dishesRoute from "./routes/dish/dish";
 import cartRoute from "./routes/cart/cart";
@@ -12,6 +13,8 @@ import {
   getFeedbackByDishId,
   updateAverageRate,
 } from "./controllers/dishController";
+import { upload, uploadFile } from "./controllers/file/file";
+import { getUserById, updateUser } from "./controllers/user/user";
 
 dotenv.config();
 
@@ -55,6 +58,12 @@ app.use("/api/dishes", dishRoutes);
 app.get("/api/dishes/:id", getDishesById);
 app.get("/api/dishes/feedback/:id", getFeedbackByDishId);
 app.get("/api/dishes/rate/:id", updateAverageRate);
+
+app.get("/api/user/:id", getUserById);
+app.put("/api/user/:id", updateUser);
+
+app.post("/api/files", upload.single("file"), uploadFile);
+app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 
 // Start server
 const PORT = process.env.PORT || 5000;

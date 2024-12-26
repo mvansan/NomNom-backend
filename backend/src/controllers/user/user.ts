@@ -3,6 +3,7 @@ import db from "../../config/db";
 import axios from "axios"; // For making HTTP requests to Google
 import User from "../../models/user/user";
 
+//==================================================================================
 export const getUserById = async (
   req: Request,
   res: Response
@@ -52,7 +53,6 @@ export const getUserById = async (
       data: user,
     });
   } catch (error) {
-    console.error("Error getting user by id:", error);
     res.status(500).json({
       success: false,
       message: "Lỗi hệ thống khi lấy thông tin người dùng.",
@@ -60,6 +60,7 @@ export const getUserById = async (
   }
 };
 
+//==================================================================================
 export const updateUser = async (
   req: Request,
   res: Response
@@ -116,7 +117,6 @@ export const updateUser = async (
       message: "Cập nhật thông tin người dùng thành công.",
     });
   } catch (error) {
-    console.error("Error updating user:", error);
     res.status(500).json({
       success: false,
       message: "Lỗi hệ thống khi cập nhật thông tin người dùng.",
@@ -150,7 +150,6 @@ export const loginByGoogle = async (req: Request, res: Response) => {
       token: result.token,
     });
   } catch (error) {
-    console.error("Error during Google login:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
@@ -182,7 +181,6 @@ export const login = async (req: Request, res: Response) => {
       token: result.token,
     });
   } catch (error) {
-    console.error("Error during login:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
@@ -211,7 +209,6 @@ export const signup = async (req: Request, res: Response) => {
       user: result,
     });
   } catch (error) {
-    console.error("Error during signup:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
@@ -219,20 +216,20 @@ export const signup = async (req: Request, res: Response) => {
 //==================================================================================
 export const logout = (req: Request, res: Response) => {
   try {
-    const token =
-      req.cookies.token || req.headers["authorization"]?.split(" ")[1];
-
-    if (!token) {
-      res.status(401).json({ error: "User not logged in" });
-      return;
-    }
-
-    // Clear token from cookie
     res.clearCookie("token");
-
     res.status(200).json({ message: "Logged out successfully" });
   } catch (error) {
-    console.error("Error during logout:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+//==================================================================================
+export const getUserProfile = async (req: any, res: Response) => {
+  try {
+    const userId = req.userId;
+    const user = await User.getUserProfile(userId);
+    res.status(200).json({ user });
+  } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };

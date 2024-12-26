@@ -11,8 +11,8 @@ export default class Favorite {
 
   static async getFavorites(userId: number) {
     try {
-      const [rows] = await db.execute("CALL get_favorites(?)", [userId]);
-      return rows;
+      const [rows]: [any[], any] = await db.execute("CALL get_favorites(?)", [userId]);
+      return rows[0];
     } catch (error) {
       throw error;
     }

@@ -197,7 +197,23 @@ BEGIN
         CASE 
             WHEN oi.status = 'confirmed' THEN TRUE 
             ELSE FALSE 
-        END AS confirmed
+        END AS confirmed,
+        CASE
+            WHEN EXISTS (
+                SELECT 1
+                FROM Feedback f
+                WHERE f.user_id = p_user_id 
+                AND f.dish_id = oi.dish_id
+                AND f.order_id = oi.id
+            ) THEN TRUE
+            ELSE FALSE
+        END AS rated,
+        (SELECT UNIX_TIMESTAMP(f.created_at)
+         FROM Feedback f
+         WHERE f.user_id = p_user_id
+         AND f.dish_id = oi.dish_id
+         AND f.order_id = oi.id
+         LIMIT 1) AS rated_at
     FROM 
         Order_items oi
     JOIN 

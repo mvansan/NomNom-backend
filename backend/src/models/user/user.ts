@@ -37,7 +37,6 @@ export default class User {
         token,
       };
     } catch (error) {
-      console.error("Error during Google login:", error);
       throw error;
     }
   }
@@ -79,8 +78,7 @@ export default class User {
       // Trả về chỉ user_id
       return userResult[0].user_id;
     } catch (error) {
-      console.error("Error during signup:", error);
-      throw error; // Ném lỗi nếu có
+      throw error;
     }
   }
 
@@ -117,8 +115,19 @@ export default class User {
         token,
       };
     } catch (error) {
-      console.error("Error during login:", error);
-      throw error; // Ném lỗi nếu có
+      throw error;
+    }
+  }
+
+  //==================================================================================
+  static async getUserProfile(userId: string) {
+    try {
+      const query = `SELECT Users.username, Users.email, Users.image, Users.image, Users.avatar, Users.address, Users.phone 
+          FROM Users WHERE user_id = ?`;
+      const [results] = await db.query(query, [userId]);
+      return results;
+    } catch (error) {
+      throw error;
     }
   }
 }

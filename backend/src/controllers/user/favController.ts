@@ -19,7 +19,6 @@ export const getFavorites = async (req: Request, res: Response) => {
     const { user_id } = req.params;
     const favorites = await Favorite.getFavorites(parseInt(user_id));
     res.status(200).json({
-      success: true,
       data: favorites,
     });
   } catch (error) {

@@ -102,6 +102,7 @@ export const getDishesById = async (
 ): Promise<void> => {
   try {
     const { id } = req.params; // Lấy id từ params
+    const { user_id } = req.query;
 
     if (!id) {
       res.status(400).json({
@@ -121,15 +122,18 @@ export const getDishesById = async (
         Dishes.desrip, 
         Category.id AS category_id,
         Restaurants.distance,
-        Restaurants.res_address
+        Restaurants.res_address,
+        CAST(COALESCE(Favorite_dish.is_favorite, 0) AS UNSIGNED) as is_favorite
       FROM Dishes 
       INNER JOIN Category ON Dishes.category_id = Category.id
       INNER JOIN Restaurants ON Dishes.restaurant_id = Restaurants.id
-      WHERE Dishes.id = ? -- Lọc theo id
+      LEFT JOIN Favorite_dish ON Dishes.id = Favorite_dish.dish_id 
+        AND Favorite_dish.user_id = ?
+      WHERE Dishes.id = ?
       ORDER BY Dishes.average_rating DESC, Restaurants.distance ASC
     `;
 
-    const [result] = await db.query(query, [id]); // Thêm giá trị id vào query
+    const [result] = await db.query(query, [user_id || null, id]);
 
     res.status(200).json(result);
   } catch (error) {

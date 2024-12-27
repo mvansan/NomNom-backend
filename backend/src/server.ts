@@ -63,6 +63,7 @@ app.use("/order", orderRoute);
 app.use("/favorite", favoriteRoute);
 app.use("/api/dishes", dishRoutes);
 app.get("/api/dishes/:id", getDishesById);
+app.post("/api/dishes/favorite", addToFavorite);
 app.get("/api/dishes/feedback/:id", getFeedbackByDishId);
 app.get("/api/dishes/rate/:id", updateAverageRate);
 
@@ -71,7 +72,6 @@ app.put("/api/user/:id", updateUser);
 
 app.post("/api/files", upload.single("file"), uploadFile);
 app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
-app.post("/favorite", addToFavorite);
 
 // Start server
 const PORT = process.env.PORT || 5000;

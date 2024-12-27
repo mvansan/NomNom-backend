@@ -233,3 +233,69 @@ export const getUserProfile = async (req: any, res: Response) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
+//==================================================================================
+export const addToFavorite = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const { user_id, dish_id } = req.body;
+
+    // Validate required fields
+    if (!user_id || !dish_id) {
+      res.status(400).json({
+        success: false,
+        message: "user_id và dish_id là bắt buộc.",
+      });
+      return;
+    }
+
+    // Check if favorite already exists
+    const checkQuery = `
+      SELECT * FROM Favorite_dish 
+      WHERE user_id = ? AND dish_id = ?
+    `;
+    const [existing] = await db.query(checkQuery, [user_id, dish_id]);
+    const favorites = existing as any[];
+
+    if (favorites.length > 0) {
+      // Update existing favorite
+      const updateQuery = `
+        UPDATE Favorite_dish 
+        SET is_favorite = ? 
+        WHERE user_id = ? AND dish_id = ?
+      `;
+      await db.query(updateQuery, [
+        !favorites[0].is_favorite,
+        user_id,
+        dish_id,
+      ]);
+
+      res.status(200).json({
+        success: true,
+        message: favorites[0].is_favorite
+          ? "Đã xóa khỏi yêu thích"
+          : "Đã thêm vào yêu thích",
+      });
+    } else {
+      // Insert new favorite
+      const insertQuery = `
+        INSERT INTO Favorite_dish (user_id, dish_id, is_favorite) 
+        VALUES (?, ?, true)
+      `;
+      await db.query(insertQuery, [user_id, dish_id]);
+
+      res.status(201).json({
+        success: true,
+        message: "Đã thêm vào yêu thích",
+      });
+    }
+  } catch (error) {
+    console.error("Error managing favorite:", error);
+    res.status(500).json({
+      success: false,
+      message: "Lỗi hệ thống khi thêm/xóa yêu thích.",
+    });
+  }
+};

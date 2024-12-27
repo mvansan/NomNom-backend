@@ -16,7 +16,11 @@ import {
   updateAverageRate,
 } from "./controllers/dishController";
 import { upload, uploadFile } from "./controllers/file/file";
-import { getUserById, updateUser } from "./controllers/user/user";
+import {
+  getUserById,
+  updateUser,
+  addToFavorite,
+} from "./controllers/user/user";
 
 dotenv.config();
 
@@ -67,6 +71,7 @@ app.put("/api/user/:id", updateUser);
 
 app.post("/api/files", upload.single("file"), uploadFile);
 app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
+app.post("/favorite", addToFavorite);
 
 // Start server
 const PORT = process.env.PORT || 5000;

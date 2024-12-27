@@ -19,7 +19,7 @@ export const searchDishes = async (req: Request, res: Response): Promise<void> =
         Dishes.id, 
         Dishes.dish_name, 
         Dishes.price, 
-        Dishes.average_rating, 
+        ROUND(AVG(Feedback.rating), 1) AS average_rating,
         Dishes.calories, 
         Dishes.img_url, 
         Category.id AS category_id,
@@ -61,18 +61,17 @@ export const getAllDishes = async (req: Request, res: Response): Promise<void> =
         Dishes.id, 
         Dishes.dish_name, 
         Dishes.price, 
-        Dishes.average_rating, 
+        ROUND(AVG(Feedback.rating), 1) AS average_rating,
         Dishes.calories, 
         Dishes.img_url, 
         Category.id AS category_id,
         Restaurants.distance,
-        Restaurants.res_address,
-        Feedback.rating,
-        Feedback.comment 
+        Restaurants.res_address
       FROM Dishes 
       INNER JOIN Category ON Dishes.category_id = Category.id
       INNER JOIN Restaurants ON Dishes.restaurant_id = Restaurants.id
       LEFT JOIN Feedback ON Dishes.id = Feedback.dish_id
+      GROUP BY Dishes.id, Category.id, Restaurants.id
       ORDER BY Dishes.average_rating DESC, Restaurants.distance ASC
     `;
     const [result] = await db.query(query); 

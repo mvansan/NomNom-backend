@@ -213,7 +213,8 @@ BEGIN
          WHERE f.user_id = p_user_id
          AND f.dish_id = oi.dish_id
          AND f.order_id = oi.id
-         LIMIT 1) AS rated_at
+         LIMIT 1) AS rated_at,
+        UNIX_TIMESTAMP(oi.confirmed_at) AS confirmed_at
     FROM 
         Order_items oi
     JOIN 

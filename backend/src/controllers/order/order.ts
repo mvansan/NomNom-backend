@@ -44,3 +44,29 @@ export const confirmOrder = async (req: Request, res: Response) => {
     res.status(500).json({ error: error });
   }
 };
+
+//==================================================================================
+export const getOrdersHistory = async (req: Request, res: Response) => {
+  try {
+    const { user_id } = req.params;
+    const orders = await Order.getOrdersHistory(parseInt(user_id));
+    res.status(200).json({
+      orders: orders,
+    });
+  } catch (error) {
+    res.status(500).json({ error: error });
+  }
+};
+
+//==================================================================================
+export const rateDish = async (req: Request, res: Response) => {
+  try {
+    const { user_id, order_id, dish_id, rating, comment } = req.body;
+    await Order.rateDish(user_id, order_id, dish_id, rating, comment);
+    res.status(200).json({
+      success: true,
+      message: "Dish rated successfully" });
+  } catch (error) {
+    res.status(500).json({ error: error });
+  }
+};

@@ -65,6 +65,7 @@ CREATE TABLE Order_items (
     quantity INT NOT NULL,
     total DECIMAL(10, 2),
     status ENUM('confirmed', 'not_confirmed') DEFAULT 'not_confirmed',
+    time DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES Users(user_id),
     FOREIGN KEY (dish_id) REFERENCES Dishes(id)
 );
@@ -74,8 +75,8 @@ CREATE TABLE Feedback (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
     dish_id INT NOT NULL,
-    order_id INT NOT NULL,
     rating DECIMAL(2, 1) CHECK (rating BETWEEN 1.0 AND 5.0),
+    order_id INT NOT NULL,
     comment TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES Users(user_id),

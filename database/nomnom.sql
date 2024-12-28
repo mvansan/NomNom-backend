@@ -64,6 +64,7 @@ CREATE TABLE Order_items (
     price DECIMAL(10, 2) NOT NULL,
     quantity INT NOT NULL,
     total DECIMAL(10, 2),
+    confirmed_at TIMESTAMP NULL DEFAULT NULL,
     status ENUM('confirmed', 'not_confirmed') DEFAULT 'not_confirmed',
     time DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES Users(user_id),

@@ -6,17 +6,14 @@ import {
   getOrdersHistory,
   rateDish,
 } from "../../controllers/order/order";
+import { authenticateToken } from "../../middleware/authMiddleware";
 
 const router = Router();
 
-router.route("/:user_id").get(getOrders);
-
-router.route("/place").post(placeOrders);
-
-router.route("/confirm").post(confirmOrder);
-
-router.route("/history/:user_id").get(getOrdersHistory);
-
-router.route("/rate").post(rateDish);
+router.route("/").get(authenticateToken, getOrders);
+router.route("/place").post(authenticateToken, placeOrders);
+router.route("/confirm").post(authenticateToken, confirmOrder);
+router.route("/history/:user_id").get(authenticateToken, getOrdersHistory);
+router.route("/rate").post(authenticateToken, rateDish);
 
 export default router;

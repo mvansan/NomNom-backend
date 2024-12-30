@@ -138,7 +138,7 @@ CREATE PROCEDURE confirm_order(IN p_order_id INT)
 BEGIN
     -- Xác nhận đơn hàng
     UPDATE Order_items
-    SET status = 'confirmed'
+    SET status = 'confirmed', confirmed_at = CURRENT_TIMESTAMP
     WHERE id = p_order_id AND status = 'not_confirmed';
     
     IF ROW_COUNT() = 0 THEN

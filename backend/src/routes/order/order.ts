@@ -13,7 +13,7 @@ const router = Router();
 router.route("/").get(authenticateToken, getOrders);
 router.route("/place").post(authenticateToken, placeOrders);
 router.route("/confirm").post(authenticateToken, confirmOrder);
-router.route("/history/:user_id").get(authenticateToken, getOrdersHistory);
+router.route("/history").get(authenticateToken, getOrdersHistory);
 router.route("/rate").post(authenticateToken, rateDish);
 
 export default router;

@@ -6,42 +6,43 @@ import {
   refreshAccessToken,
   generateTokens,
 } from "../../services/tokenService";
+import { CustomRequest } from "../../middleware/authMiddleware";
 import dotenv from "dotenv";
 
 dotenv.config();
 //==================================================================================
 export const getUserById = async (
-  req: Request,
+  req: CustomRequest, // Sử dụng CustomRequest với userId
   res: Response
 ): Promise<void> => {
   try {
-    const { id } = req.params;
+    const userId = req.userId; // Lấy userId từ req.userId (được xác thực trong middleware)
 
-    if (!id) {
+    if (!userId) {
       res.status(400).json({
         success: false,
-        message: "Thiếu tham số id.",
+        message: "User ID không có trong token.",
       });
       return;
     }
 
     const query = `
-      SELECT 
-        Users.user_id, 
-        Users.username, 
+      SELECT
+        Users.user_id,
+        Users.username,
         Users.password,
-        Users.email, 
-        Users.image, 
-        Users.avatar, 
-        Users.address, 
+        Users.email,
+        Users.image,
+        Users.avatar,
+        Users.address,
         Users.phone
-      FROM Users 
+      FROM Users
       WHERE Users.user_id = ?
     `;
-    const [result] = await db.query(query, [id]);
+
+    const [result] = await db.query(query, [userId]);
 
     const users = result as any[];
-
     if (users.length === 0) {
       res.status(404).json({
         success: false,
@@ -50,9 +51,9 @@ export const getUserById = async (
       return;
     }
 
-    // Lọc bỏ thông tin nhạy cảm (nếu cần)
+    // Lọc bỏ thông tin nhạy cảm nếu cần
     const user = users[0];
-    delete user.password; // Loại bỏ trường password khỏi phản hồi nếu không cần
+    delete user.password; // Loại bỏ password nếu không cần thiết
 
     res.status(200).json({
       success: true,
@@ -68,23 +69,23 @@ export const getUserById = async (
 
 //==================================================================================
 export const updateUser = async (
-  req: Request,
+  req: CustomRequest, // Sử dụng CustomRequest với userId
   res: Response
 ): Promise<void> => {
   try {
-    const { id } = req.params;
-    const { username, password, email, address, phone } = req.body;
+    const userId = req.userId; // Lấy userId từ token
 
-    // Validate ID
-    if (!id) {
+    if (!userId) {
       res.status(400).json({
         success: false,
-        message: "Thiếu tham số id.",
+        message: "Không có userId trong token.",
       });
       return;
     }
 
-    // Check if at least one field to update exists
+    const { username, password, email, address, phone } = req.body;
+
+    // Kiểm tra nếu ít nhất một trường cần cập nhật tồn tại
     if (!username && !password && !email && !address && !phone) {
       res.status(400).json({
         success: false,
@@ -93,12 +94,12 @@ export const updateUser = async (
       return;
     }
 
-    // Build dynamic update query
+    // Tạo câu lệnh SQL cập nhật động
     let updateQuery = "UPDATE Users SET ";
     const updateValues = [];
     const updates = [];
 
-    // Add fields to update if they exist
+    // Thêm các trường cần cập nhật vào câu lệnh SQL
     if (username) {
       updates.push("username = ?");
       updateValues.push(username);
@@ -122,9 +123,9 @@ export const updateUser = async (
 
     updateQuery += updates.join(", ");
     updateQuery += " WHERE user_id = ?";
-    updateValues.push(id);
+    updateValues.push(userId); // Dùng userId từ token để cập nhật
 
-    // Execute update query
+    // Thực thi câu lệnh SQL cập nhật
     const [result] = await db.query(updateQuery, updateValues);
 
     if ((result as any).affectedRows === 0) {

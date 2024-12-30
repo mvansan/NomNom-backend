@@ -1,8 +1,14 @@
 import { Request, Response } from "express";
-import db from "../../config/db";
 import axios from "axios"; // For making HTTP requests to Google
+import db from "../../config/db";
 import User from "../../models/user/user";
+import {
+  refreshAccessToken,
+  generateTokens,
+} from "../../services/tokenService";
+import dotenv from "dotenv";
 
+dotenv.config();
 //==================================================================================
 export const getUserById = async (
   req: Request,
@@ -159,27 +165,28 @@ export const login = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
     if (!email || !password) {
-      res.status(400).json({ error: "email and password are required" });
+      res.status(400).json({ error: "Email and password are required" });
       return;
     }
 
     const result = await User.login(email, password);
-
     if (result.error) {
       res.status(400).json({ error: result.error });
       return;
     }
 
-    // Save token to cookie for subsequent requests
-    res.cookie("token", result.token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+    const { accessToken, refreshToken } = generateTokens(result.user.id);
+
+    // Lưu Refresh Token vào cookie
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true, // Cookie chỉ có thể truy cập từ phía server
+      secure: process.env.NODE_ENV === "production", // Chỉ gửi cookie qua HTTPS khi ở production
+      // secure: false,
+      sameSite: "strict", // Không cho phép cookie qua cross-domain
+      maxAge: 7 * 24 * 60 * 60 * 1000, // Cookie tồn tại 7 ngày
     });
 
-    res.status(200).json({
-      message: "Login successful",
-      token: result.token,
-    });
+    res.status(200).json({ message: "Login successful", accessToken });
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });
   }
@@ -204,10 +211,7 @@ export const signup = async (req: Request, res: Response) => {
       return;
     }
 
-    res.status(200).json({
-      message: "User registered successfully",
-      user: result,
-    });
+    res.status(200).json({ message: "User registered successfully" });
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });
   }
@@ -216,7 +220,11 @@ export const signup = async (req: Request, res: Response) => {
 //==================================================================================
 export const logout = (req: Request, res: Response) => {
   try {
-    res.clearCookie("token");
+    res.clearCookie("refreshToken", {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+    });
     res.status(200).json({ message: "Logged out successfully" });
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });
@@ -229,6 +237,25 @@ export const getUserProfile = async (req: any, res: Response) => {
     const userId = req.userId;
     const user = await User.getUserProfile(userId);
     res.status(200).json({ user });
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+//==================================================================================
+export const refreshToken = (req: Request, res: Response) => {
+  try {
+    const refreshToken = req.cookies.refreshToken;
+
+    if (!refreshToken) {
+      res.status(401).json({ error: "Refresh token is required" });
+      return;
+    }
+
+    // Giải mã và xác thực refresh token, sau đó tạo mới access token
+    const newAccessToken = refreshAccessToken(refreshToken);
+
+    res.json({ accessToken: newAccessToken });
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });
   }

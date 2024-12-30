@@ -1,6 +1,9 @@
 import db from "../../config/db";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 export default class User {
   //==================================================================================
@@ -85,34 +88,24 @@ export default class User {
   //==================================================================================
   static async login(email: string, password: string): Promise<any> {
     try {
-      // Kiểm tra xem người dùng có tồn tại trong cơ sở dữ liệu không
       const checkUserQuery = "SELECT * FROM Users WHERE email = ?";
       const [rows]: [any[], any[]] = await db.execute(checkUserQuery, [email]);
 
       if (rows.length === 0) {
-        return { error: "User not found" }; // Người dùng không tồn tại
+        return { error: "Email address not registered" };
       }
 
-      // Kiểm tra mật khẩu
       const isPasswordValid = await bcrypt.compare(password, rows[0].password);
-
       if (!isPasswordValid) {
-        return { error: "Invalid password" }; // Mật khẩu không hợp lệ
+        return { error: "Incorrect password" };
       }
 
-      // Tạo token cho người dùng
-      const token = jwt.sign({ userId: rows[0].user_id }, "your_jwt_secret", {
-        expiresIn: "1h",
-      });
-
-      // Trả về thông tin người dùng và token
       return {
         user: {
           id: rows[0].user_id,
           email: rows[0].email,
           username: rows[0].username,
         },
-        token,
       };
     } catch (error) {
       throw error;

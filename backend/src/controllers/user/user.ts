@@ -197,11 +197,10 @@ export const login = async (req: Request, res: Response) => {
 
     // Lưu Refresh Token vào cookie
     res.cookie("refreshToken", refreshToken, {
-      httpOnly: true, // Cookie chỉ có thể truy cập từ phía server
-      secure: process.env.NODE_ENV === "production", // Chỉ gửi cookie qua HTTPS khi ở production
-      // secure: false,
-      sameSite: "strict", // Không cho phép cookie qua cross-domain
-      maxAge: 7 * 24 * 60 * 60 * 1000, // Cookie tồn tại 7 ngày
+      httpOnly: true,
+      secure: true, // Yêu cầu HTTPS (hoạt động trên BE đã deploy)
+      sameSite: "none", // Cho phép cross-origin
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 ngày
     });
 
     res.status(200).json({ message: "Login successful", accessToken });

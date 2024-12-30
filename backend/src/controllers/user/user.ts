@@ -73,8 +73,9 @@ export const updateUser = async (
 ): Promise<void> => {
   try {
     const { id } = req.params;
-    const { username, email } = req.body;
+    const { username, password, email, address, phone } = req.body;
 
+    // Validate ID
     if (!id) {
       res.status(400).json({
         success: false,
@@ -83,7 +84,8 @@ export const updateUser = async (
       return;
     }
 
-    if (!username && !email) {
+    // Check if at least one field to update exists
+    if (!username && !password && !email && !address && !phone) {
       res.status(400).json({
         success: false,
         message: "Cần ít nhất một trường để cập nhật.",
@@ -91,23 +93,38 @@ export const updateUser = async (
       return;
     }
 
+    // Build dynamic update query
     let updateQuery = "UPDATE Users SET ";
     const updateValues = [];
     const updates = [];
 
+    // Add fields to update if they exist
     if (username) {
       updates.push("username = ?");
       updateValues.push(username);
     }
+    if (password) {
+      updates.push("password = ?");
+      updateValues.push(password);
+    }
     if (email) {
       updates.push("email = ?");
       updateValues.push(email);
+    }
+    if (address) {
+      updates.push("address = ?");
+      updateValues.push(address);
+    }
+    if (phone) {
+      updates.push("phone = ?");
+      updateValues.push(phone);
     }
 
     updateQuery += updates.join(", ");
     updateQuery += " WHERE user_id = ?";
     updateValues.push(id);
 
+    // Execute update query
     const [result] = await db.query(updateQuery, updateValues);
 
     if ((result as any).affectedRows === 0) {
@@ -123,6 +140,7 @@ export const updateUser = async (
       message: "Cập nhật thông tin người dùng thành công.",
     });
   } catch (error) {
+    console.error("Error updating user:", error);
     res.status(500).json({
       success: false,
       message: "Lỗi hệ thống khi cập nhật thông tin người dùng.",

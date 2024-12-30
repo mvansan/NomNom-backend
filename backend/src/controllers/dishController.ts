@@ -27,14 +27,13 @@ export const searchDishes = async (
         Dishes.img_url, 
         Category.id AS category_id,
         Restaurants.distance,
-        Restaurants.res_address,
-        Feedback.rating,
-        Feedback.comment
+        Restaurants.res_address
       FROM Dishes 
       INNER JOIN Category ON Dishes.category_id = Category.id
       INNER JOIN Restaurants ON Dishes.restaurant_id = Restaurants.id
       LEFT JOIN Feedback ON Dishes.id = Feedback.dish_id
       WHERE Dishes.dish_name LIKE ?
+      GROUP BY Dishes.id, Dishes.dish_name, Dishes.price, Dishes.calories, Dishes.img_url, Category.id, Restaurants.distance, Restaurants.res_address
     `;
     const [results] = await db.execute(query, [`%${q}%`]);
 
@@ -102,7 +101,7 @@ export const getDishesById = async (
 ): Promise<void> => {
   try {
     const { id } = req.params; // Lấy id từ params
-    const { user_id } = req.query;
+    const userId = (req as any).userId;
 
     if (!id) {
       res.status(400).json({
@@ -133,7 +132,7 @@ export const getDishesById = async (
       ORDER BY Dishes.average_rating DESC, Restaurants.distance ASC
     `;
 
-    const [result] = await db.query(query, [user_id || null, id]);
+    const [result] = await db.query(query, [userId, id]);
 
     res.status(200).json(result);
   } catch (error) {

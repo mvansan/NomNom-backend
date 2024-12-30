@@ -3,13 +3,14 @@ import {
   getCartItems,
   addToCart,
   deleteFromCart,
-  clearCart,
 } from "../../controllers/cart/cart";
+import { authenticateToken } from "../../middleware/authMiddleware";
 
 const router = Router();
-
-router.route("/").get(getCartItems).post(addToCart).delete(deleteFromCart);
-
-router.delete("/clear", clearCart);
+router
+  .route("/")
+  .get(authenticateToken, getCartItems)
+  .post(authenticateToken, addToCart)
+  .delete(authenticateToken, deleteFromCart);
 
 export default router;

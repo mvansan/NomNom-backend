@@ -89,19 +89,21 @@ DELIMITER ;
 
 DELIMITER $$
 
+
 -- Xóa thủ tục cũ nếu có
 DROP PROCEDURE IF EXISTS placeOrder$$
 
 CREATE PROCEDURE placeOrder(
     IN user_id INT,
-    IN dish_id INT
+    IN dish_id INT,
+    IN dish_quantity INT
 )
 BEGIN
     -- Đặt món ăn vào đơn hàng
     DECLARE dish_price DECIMAL(10, 2);
-    DECLARE dish_quantity INT;
     DECLARE total DECIMAL(10, 2);
     
+    -- Lấy giá món ăn
     SELECT price INTO dish_price
     FROM Dishes
     WHERE id = dish_id;
@@ -110,20 +112,14 @@ BEGIN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Dish not found';
     END IF;
     
-    SELECT quantity INTO dish_quantity
-    FROM Cart_items
-    WHERE user_id = user_id AND dish_id = dish_id
-    LIMIT 1;
-    
-    IF dish_quantity IS NULL THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Dish not found in cart';
-    END IF;
-    
+    -- Tính tổng giá trị đơn hàng
     SET total = dish_price * dish_quantity;
     
+    -- Thêm món ăn vào đơn hàng
     INSERT INTO Order_items (user_id, dish_id, price, quantity, total, status)
     VALUES (user_id, dish_id, dish_price, dish_quantity, total, 'not_confirmed');
     
+    -- Trả về thông báo và tổng giá trị đơn hàng
     SELECT 'Order placed successfully' AS message, total AS totalOrderPrice;
 END$$
 
@@ -138,7 +134,7 @@ CREATE PROCEDURE confirm_order(IN p_order_id INT)
 BEGIN
     -- Xác nhận đơn hàng
     UPDATE Order_items
-    SET status = 'confirmed', confirmed_at = CURRENT_TIMESTAMP
+    SET status = 'confirmed'
     WHERE id = p_order_id AND status = 'not_confirmed';
     
     IF ROW_COUNT() = 0 THEN

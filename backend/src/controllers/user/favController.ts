@@ -3,7 +3,7 @@ import Favorite from "../../models/user/fav";
 
 export const addFavorite = async (req: Request, res: Response) => {
   try {
-    const userId = (req as any).user.id;
+    const userId = (req as any).userId;
     const { dish_id } = req.body;
     await Favorite.addFavorite(userId, dish_id);
     res.status(200).json({

@@ -41,9 +41,21 @@ export default class Order {
   }
 
   //==================================================================================
-  static async rateDish(userId: number, orderId: number,dishId: number, rating: number, comment: string) {
+  static async rateDish(
+    userId: number,
+    orderId: number,
+    dishId: number,
+    rating: number,
+    comment: string
+  ) {
     try {
-      await db.execute("CALL rate_dish(?, ?, ?, ?, ?)", [userId, orderId, dishId, rating, comment]);
+      await db.execute("CALL rate_dish(?, ?, ?, ?, ?)", [
+        userId,
+        orderId,
+        dishId,
+        rating,
+        comment,
+      ]);
     } catch (error) {
       throw error;
     }

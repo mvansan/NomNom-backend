@@ -5,7 +5,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 // Tạo interface tùy chỉnh cho req
-interface CustomRequest extends Request {
+export interface CustomRequest extends Request {
   userId?: string;
 }
 

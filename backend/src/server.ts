@@ -72,8 +72,8 @@ app.post("/api/dishes/favorite", addToFavorite);
 app.get("/api/dishes/feedback/:id", getFeedbackByDishId);
 app.get("/api/dishes/rate/:id", updateAverageRate);
 
-app.get("/api/user/:id", getUserById);
-app.put("/api/user/:id", updateUser);
+app.get("/api/user", getUserById);
+app.put("/api/user", updateUser);
 
 app.post("/api/files", upload.single("file"), uploadFile);
 app.use("/uploads", express.static(path.join(__dirname, "../uploads")));

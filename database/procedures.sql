@@ -89,19 +89,21 @@ DELIMITER ;
 
 DELIMITER $$
 
+
 -- Xóa thủ tục cũ nếu có
 DROP PROCEDURE IF EXISTS placeOrder$$
 
 CREATE PROCEDURE placeOrder(
     IN user_id INT,
-    IN dish_id INT
+    IN dish_id INT,
+    IN dish_quantity INT
 )
 BEGIN
     -- Đặt món ăn vào đơn hàng
     DECLARE dish_price DECIMAL(10, 2);
-    DECLARE dish_quantity INT;
     DECLARE total DECIMAL(10, 2);
     
+    -- Lấy giá món ăn
     SELECT price INTO dish_price
     FROM Dishes
     WHERE id = dish_id;
@@ -110,20 +112,14 @@ BEGIN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Dish not found';
     END IF;
     
-    SELECT quantity INTO dish_quantity
-    FROM Cart_items
-    WHERE user_id = user_id AND dish_id = dish_id
-    LIMIT 1;
-    
-    IF dish_quantity IS NULL THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Dish not found in cart';
-    END IF;
-    
+    -- Tính tổng giá trị đơn hàng
     SET total = dish_price * dish_quantity;
     
+    -- Thêm món ăn vào đơn hàng
     INSERT INTO Order_items (user_id, dish_id, price, quantity, total, status)
     VALUES (user_id, dish_id, dish_price, dish_quantity, total, 'not_confirmed');
     
+    -- Trả về thông báo và tổng giá trị đơn hàng
     SELECT 'Order placed successfully' AS message, total AS totalOrderPrice;
 END$$
 
@@ -272,8 +268,8 @@ CREATE PROCEDURE add_favorite(
 )
 BEGIN
     INSERT INTO Favorite_dish (user_id, dish_id, is_favorite)
-    VALUES (p_user_id, p_dish_id, TRUE)
-    ON DUPLICATE KEY UPDATE is_favorite = TRUE;
+    VALUES (p_user_id, p_dish_id, 1)
+    ON DUPLICATE KEY UPDATE is_favorite = 1;
 END$$
 
 DELIMITER $$
@@ -294,7 +290,7 @@ BEGIN
     JOIN 
         Dishes d ON f.dish_id = d.id
     WHERE 
-        f.user_id = p_user_id AND f.is_favorite = TRUE;
+        f.user_id = p_user_id AND f.is_favorite = 1;
 END$$
 
 DELIMITER $$

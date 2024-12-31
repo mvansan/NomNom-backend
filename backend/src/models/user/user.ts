@@ -123,4 +123,25 @@ export default class User {
       throw error;
     }
   }
+
+  //==================================================================================
+  static async updateUserProfile(userId: string, data: any) {
+    try {
+      const updateQuery = `UPDATE Users SET username = ?, email = ?, address = ?, phone = ? WHERE user_id = ?`;
+      await db.query(updateQuery, [
+        data.username,
+        data.email,
+        data.address,
+        data.phone,
+        userId,
+      ]);
+
+      const selectQuery = `SELECT username, email, address, phone FROM Users WHERE user_id = ?`;
+      const [result]: [any[], any] = await db.query(selectQuery, [userId]);
+
+      return result[0];
+    } catch (error) {
+      throw error;
+    }
+  }
 }

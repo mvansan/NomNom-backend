@@ -258,6 +258,28 @@ export const getUserProfile = async (req: any, res: Response) => {
 };
 
 //==================================================================================
+export const updateUserProfile = async (req: CustomRequest, res: Response) => {
+  try {
+    const userId = req.userId;
+    const { username, email, image, address, phone } = req.body;
+
+    if (!userId) {
+      res.status(400).json({
+        success: false,
+        message: "User ID không có trong token.",
+      });
+      return;
+    }
+
+    const user = await User.updateUserProfile(userId, { username, email, image, address, phone });
+    res.status(200).json({ user });
+  } catch (error) {
+    console.error("Error updating user profile:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+//==================================================================================
 export const refreshToken = (req: Request, res: Response) => {
   try {
     const refreshToken = req.cookies.refreshToken;

@@ -2,9 +2,9 @@ import db from "../../config/db";
 
 //==================================================================================
 export default class Order {
-  static async placeOrder(userId: number, dishId: number) {
+  static async placeOrder(userId: number, dishId: number, quantity: number) {
     try {
-      await db.execute("CALL placeOrder(?, ?)", [userId, dishId]);
+      await db.execute("CALL placeOrder(?, ?, ?)", [userId, dishId, quantity]);
     } catch (error) {
       throw error;
     }

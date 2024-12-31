@@ -6,11 +6,15 @@ import Cart from "../../models/cart/cart";
 export const placeOrders = async (req: any, res: Response) => {
   try {
     const userId = req.userId;
-    const { dish_ids } = req.body;
+    const { dish_ids, quantities } = req.body;
 
-    const orderPromises = dish_ids.map(async (dish_id: number) => {
-      await Order.placeOrder(userId, dish_id);
-    });
+    const orderPromises = dish_ids.map(
+      async (dish_id: number, index: number) => {
+        const quantity = quantities[index];
+        await Order.placeOrder(userId, dish_id, quantity);
+      }
+    );
+
     await Promise.all(orderPromises);
     await Cart.clearCart(userId.toString());
     res.status(200).json({ message: "All orders placed successfully" });

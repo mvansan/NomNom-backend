@@ -6,6 +6,7 @@ import {
   signup,
   logout,
   getUserProfile,
+  updateUserProfile,
   getUserById,
   updateUser,
 } from "../../controllers/user/user";
@@ -24,9 +25,9 @@ router.route("/signup").post(signup);
 router.route("/logout").post(authenticateToken, logout);
 
 router.route("/profile").get(authenticateToken, getUserProfile);
+router.route("/profile").put(authenticateToken, updateUserProfile);
 
 router.route("/info").get(authenticateToken, getUserById);
-
 router.route("/info").put(authenticateToken, updateUser);
 
 export default router;

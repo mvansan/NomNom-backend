@@ -6,7 +6,7 @@ dotenv.config();
 // Hàm tạo access token
 export function generateAccessToken(userId: string) {
   return jwt.sign({ userId }, process.env.JWT_SECRET!, {
-    expiresIn: "15m", // Thời gian hết hạn của access token (15 phút)
+    expiresIn: "1d", // Thời gian hết hạn của access token (1 ngày)
   });
 }
 

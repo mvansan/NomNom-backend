@@ -10,17 +10,7 @@ import dishesRoute from "./routes/dish/dish";
 import cartRoute from "./routes/cart/cart";
 import orderRoute from "./routes/order/order";
 import favoriteRoute from "./routes/favoriteRoutes";
-import {
-  getDishesById,
-  getFeedbackByDishId,
-  updateAverageRate,
-} from "./controllers/dishController";
 import { upload, uploadFile } from "./controllers/file/file";
-import {
-  getUserById,
-  updateUser,
-  addToFavorite,
-} from "./controllers/user/user";
 
 dotenv.config();
 
@@ -67,15 +57,6 @@ app.use("/cart", cartRoute);
 app.use("/order", orderRoute);
 app.use("/favorite", favoriteRoute);
 app.use("/api/dishes", dishRoutes);
-app.get("/api/dishes/:id", getDishesById);
-app.post("/api/dishes/favorite", addToFavorite);
-app.get("/api/dishes/feedback/:id", getFeedbackByDishId);
-app.get("/api/dishes/rate/:id", updateAverageRate);
-
-app.get("/api/user", getUserById);
-app.put("/api/user", updateUser);
-
-app.post("/api/files", upload.single("file"), uploadFile);
 app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 
 // Start server

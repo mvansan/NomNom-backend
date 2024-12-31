@@ -33,6 +33,7 @@ export function authenticateToken(
     }
 
     req.userId = decoded.userId; // Lưu userId vào req
+    console.log("check", req.userId);
     next(); // Tiếp tục xử lý request
   } catch (error) {
     res.status(403).json({ error: "Invalid or expired token" });

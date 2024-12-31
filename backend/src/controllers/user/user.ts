@@ -11,10 +11,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 //==================================================================================
-export const getUserById = async (
-  req: CustomRequest, // Sử dụng CustomRequest với userId
-  res: Response
-): Promise<void> => {
+export const getUserById = async (req: any, res: Response): Promise<void> => {
   try {
     const userId = req.userId; // Lấy userId từ req.userId (được xác thực trong middleware)
 
@@ -104,10 +101,10 @@ export const updateUser = async (
       updates.push("username = ?");
       updateValues.push(username);
     }
-    if (password) {
-      updates.push("password = ?");
-      updateValues.push(password);
-    }
+    // if (password) {
+    //   updates.push("password = ?");
+    //   updateValues.push(password);
+    // }
     if (email) {
       updates.push("email = ?");
       updateValues.push(email);
